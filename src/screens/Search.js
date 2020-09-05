@@ -1,10 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
   StatusBar,
   SafeAreaView,
-  Image,
   StyleSheet,
   ToastAndroid,
   FlatList,
@@ -16,10 +15,11 @@ import {connect} from 'react-redux';
 import FontAwsome from 'react-native-vector-icons/FontAwesome';
 import Empty from '../components/Empty';
 import {Actions} from 'react-native-router-flux';
+import {CachedImage} from 'react-native-img-cache';
 
 const API_KEY = 'e0fbd801';
 
-class Search extends PureComponent {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,10 +33,10 @@ class Search extends PureComponent {
       <TouchableOpacity
         onPress={() => Actions.push('product', {id: item.imdbID})}
         style={styles.Render}>
-        <Image
+        <CachedImage
           resizeMode="contain"
           style={styles.Img}
-          source={{uri: item.Poster, cache: 'only-if-cached'}}
+          source={{uri: item.Poster}}
         />
         <Text style={styles.RenderYear}>{item.Year}</Text>
         <Text style={styles.RenderText}>{item.Title}</Text>
@@ -59,7 +59,6 @@ class Search extends PureComponent {
       const json = await response.json();
       this.setState({Loading: false});
       if (json.Response === 'True') {
-        console.log(json.Search);
         this.setState({result: json.Search});
         this.scrollView.scrollToIndex({index: 0, animated: true});
       } else {
@@ -70,14 +69,20 @@ class Search extends PureComponent {
       ToastAndroid.show('An error occurred', ToastAndroid.LONG);
     }
   }
+  checkSearchBox(data) {
+    if (data !== '') {
+      this.GetData(data);
+    } else {
+      ToastAndroid.show('Enter Movie Name', ToastAndroid.SHORT);
+    }
+  }
   render() {
     const {result, Loading} = this.state;
-    console.log(this.props);
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar hidden />
         <Text style={styles.Title}>Movie Explore</Text>
-        <SearchBox search={(data) => this.GetData(data)} />
+        <SearchBox search={(data) => this.checkSearchBox(data)} />
         <View style={styles.result}>
           <Text style={styles.resultText}>Movies</Text>
           <FontAwsome style={styles.resultIcon} name="bars" />

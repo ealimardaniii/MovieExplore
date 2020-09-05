@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import FontAwsome from 'react-native-vector-icons/FontAwesome5';
 import {Colors} from '../global/Colors';
 import {Actions} from 'react-native-router-flux';

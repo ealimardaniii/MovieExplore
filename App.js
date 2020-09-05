@@ -19,7 +19,7 @@ export default class App extends PureComponent {
       if (Actions.currentScene === 'search') {
         backButtonPressedOnceToExit = true;
         ToastAndroid.show(
-          'برای خروج، یک بار دیگر دکمه بازگشت را بزنید.',
+          'Press again the back button to exit',
           ToastAndroid.LONG,
         );
         setTimeout(() => {

@@ -8,18 +8,14 @@ import {
   StyleSheet,
   ToastAndroid,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
 import {setProduct} from '../redux/Actions/Index';
-import SearchBox from '../components/SearchBox';
 import {Colors} from '../global/Colors';
 import {connect} from 'react-redux';
 import FontAwsome from 'react-native-vector-icons/FontAwesome';
 import FontAwsome5 from 'react-native-vector-icons/FontAwesome5';
-import Empty from '../components/Empty';
-import {Actions} from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../components/Header';
 
@@ -52,7 +48,6 @@ class Product extends PureComponent {
       const json = await response.json();
       this.setState({Loading: false});
       if (json.Response === 'True') {
-        console.log(json.Search);
         this.props.setProduct({
           data: json,
         });
@@ -65,13 +60,12 @@ class Product extends PureComponent {
     }
   }
   render() {
-    const {result, Loading} = this.state;
+    const {Loading} = this.state;
     const {data} = this.props.product;
-    console.log(this.props);
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar hidden />
-        {!Loading ? (
+        {!Loading && data ? (
           <ScrollView style={styles.content}>
             <View>
               <Header />
