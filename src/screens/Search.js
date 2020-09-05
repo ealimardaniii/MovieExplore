@@ -31,7 +31,7 @@ class Search extends PureComponent {
   renderItem({item}) {
     return (
       <TouchableOpacity
-        onPress={() => Actions.push('product')}
+        onPress={() => Actions.push('product', {id: item.imdbID})}
         style={styles.Render}>
         <Image
           resizeMode="contain"
@@ -61,6 +61,7 @@ class Search extends PureComponent {
       if (json.Response === 'True') {
         console.log(json.Search);
         this.setState({result: json.Search});
+        this.scrollView.scrollToIndex({index: 0, animated: true});
       } else {
         this.setState({result: []});
       }
@@ -82,6 +83,9 @@ class Search extends PureComponent {
           <FontAwsome style={styles.resultIcon} name="bars" />
         </View>
         <FlatList
+          ref={(view) => {
+            this.scrollView = view;
+          }}
           refreshing={Loading}
           onRefresh={() => this.GetData()}
           numColumns={2}
@@ -105,14 +109,14 @@ export default connect(mapStateToProps, null)(Search);
 
 const styles = StyleSheet.create({
   Title: {
-    color: Colors.Black,
+    color: Colors.White,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 30,
     marginTop: 20,
   },
   container: {
-    backgroundColor: Colors.Light,
+    backgroundColor: Colors.Black,
     flex: 1,
   },
   content: {
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
   },
   resultIcon: {
     fontSize: 20,
+    color: Colors.White,
   },
   result: {
     flexDirection: 'row',
@@ -151,10 +156,11 @@ const styles = StyleSheet.create({
     flex: 1,
     letterSpacing: 1,
     fontSize: 16,
-    opacity: 0.7,
+    color: Colors.White,
   },
   RenderYear: {
     textAlign: 'center',
+    color: Colors.Light,
     flex: 1,
     marginTop: 5,
     letterSpacing: 1,

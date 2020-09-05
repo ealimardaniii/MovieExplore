@@ -4,6 +4,8 @@ export const Colors = {
   HardLight: '#DBE5E9',
   Gray: '#A8A9AB',
   HardGray: '#7C858E',
-  Black: '#37393F',
+  Black: '#000000',
   Blue: '#5AB3F1',
+  Green: '#6fbe7e',
+  Red: '#f95862',
 };
