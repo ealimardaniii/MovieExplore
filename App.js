@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {BackHandler, ToastAndroid} from 'react-native';
+import {BackHandler, ToastAndroid, LogBox} from 'react-native';
 import {Router, Scene, Stack, Actions} from 'react-native-router-flux';
 import {connect, Provider} from 'react-redux';
 import store from './src/redux/Store/Index';
@@ -7,6 +7,8 @@ import Search from './src/screens/Search';
 import Product from './src/screens/Product';
 
 let backButtonPressedOnceToExit = false;
+LogBox.ignoreAllLogs();
+
 export default class App extends PureComponent {
   constructor(props) {
     super(props);
